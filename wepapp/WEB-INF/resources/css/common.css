@@ -1,0 +1,84 @@
+@charset "UTF-8";
+/*테이블*/
+
+table.t01 {width:100%; }
+
+table.t01 thead th, table.t01 tbody th{ border-top:1px solid #5c81c6; background:#f1f5fc;}
+
+table.t01 .tb_top { border-top:1px solid #5c81c6;}
+
+table.t01 th {/*background:#f9f9f9;*/  text-align:center; padding:13px 0px 10px 0px; border:1px solid #e4e4e4; color:#1345b2; border-left:0; text-align:center;}
+
+table.t01 td {padding:8px 3px 6px 5px; border:1px solid #e4e4e4;  text-align:center;}
+
+table.t01 td.non_line {border-right:none !important;}
+
+table.t01 td.text{background:#fcfcfc;  padding:8px 3px 6px 5px; border:1px solid #e4e4e4;  text-align:center;font-weight:bold;}
+
+table.t01 td.tit {font-weight:bold; text-align:center;}
+
+#menuBox{
+	border:1px solid black;
+    background-color:white;
+	width: 12%;
+    position: absolute;
+    top: 14.1%;
+    float: left;
+    left: 53.5%;
+}
+
+#menuBox{
+	border:1px solid black;
+    background-color:white;
+	width: 12%;
+    position: absolute;
+    top: 32.1%;
+    float: left;
+    left: 17.5%;
+}
+ 
+
+table.t01 .l_line {border-left:1px solid #e4e4e4;}
+a {text-decoration: noone;color: darkblue;}
+a:link{text-decoration: none;}
+a:visited{text-decoration: none;}
+a:hover{cursor: pointer; color:red;}
+ 
+
+ 
+
+.btn01 {-webkit-transition: background 0.5s ease; border:none; border-radius:5px; background:#D13E0A; text-align:center; font-size:15px; padding:10px 30px; color:#fff; cursor:pointer;}
+
+.btn01:hover {background:#B83609;}
+
+.btn02 {font-size: 13px !important; border:none; border-radius:5px; background:#333; text-align:center; font-size:15px; vertical-align: top; padding: 6px 10px; color:#fff; cursor:pointer;}
+
+.btn02:hover {text-decoration:underline;}
+
+#repleOutBox{
+	width: 60%;
+    margin: 0 auto;
+    margin-top: 20px;
+    background-color: silver;
+    height: 150px;
+}
+ul {
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+li {
+    border : 0;
+    float: left;
+    width:20%;
+    height: 100%;
+    border-right: 1px solid black;
+    width: 17%;
+    padding-top: 3px;
+    vertical-align: top;
+    margin-top: 6px;
+    text-align: center;
+    float: left;
+    margin-left: 12px;
+}

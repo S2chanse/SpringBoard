@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="PDS">
+    	<resultMap id="PdsMap" type="com.spring.pds.vo.PdsVo">
+  		<result property="idx" 	  	 column="IDX" 			javaType="int"/>
+  		<result property="lookcnt"   column="LOOKCNT"   	javaType="int"/>
+  		<result property="title"  	 column="TITLE"     	javaType="String"/>
+  		<result property="cntx" 	 column="CNTX" 			javaType="String"/>
+  		<result property="memid"   	 column="MEMID" 	  	javaType="String"/>
+  		<result property="mempwd"    column="MEMPWD"    	javaType="String"/>
+  		<result property="likecnt" 	 column="LIKECNT"		javaType="int"/>
+  		<result property="regdate"   column="REGDATENAME"   javaType="String"/>
+  		<result property="fnum"    	 column="FNUM"    		javaType="int"/>
+  		<result property="lvl" 	   	 column="LVL" 			javaType="int"/>
+  		<result property="step"   	 column="STEP"  		javaType="int"/>
+  		<result property="pnum"    	 column="PNUM"    		javaType="int"/>
+		<result property="del_yn"    column="DEL_YN"   		javaType="String"/>
+  		<result property="menuid"    column="MENUID"    	javaType="String"/>
+  		<result property="menuname"  column="MENUNAME"      javaType="String"/>
+  		<result property="menuidx"   column="MENUIDX"   	javaType="int"/>
+  		<result property="fileName"  column="FILENAME"      javaType="String"/>
+    </resultMap>
+    <resultMap id="files" type="com.spring.pds.files.vo.FilesVo">
+    	<result property="fileNum" column="FILE_NUM" javaType="int"/>
+    	<result property="fileName" column="FILENAME" javaType="String"/>
+    	<result property="fileExt" column="FILEEXT" javaType="String"/>
+    	<result property="sfileName" column="SFILENAME" javaType="String"/>
+    </resultMap>
+    <select id="PdsGetList"
+    statementType="CALLABLE" parameterType="hashmap"
+    	resultType="com.spring.pds.vo.PdsVo"
+    >
+    	{Call PKG_PDS.PROC_PDS_LIST(
+    	#{menuId,mode=IN,jdbcType=VARCHAR},
+    	#{pnum,mode=IN,jdbcType=INTEGER},
+    	#{rowcnt,mode=IN,jdbcType=INTEGER},
+    	#{rowCntAll,mode=OUT,jdbcType=INTEGER,javaType=int},
+    	#{result,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=PdsMap}
+    	)}
+    </select>
+      <select id="PdsGetRow"
+    statementType="CALLABLE" parameterType="hashmap"
+    	resultType="com.spring.pds.vo.PdsVo"
+    >
+    	{Call PKG_PDS.PROC_PDS_ROW(
+    	#{idx,mode=IN,jdbcType=INTEGER},
+    	#{menuId,mode=IN,jdbcType=VARCHAR},
+    	#{result,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=PdsMap}
+    	)}
+    </select>
+    <insert id="PdsInsert" statementType="CALLABLE"  parameterType="hashmap" >
+    	{Call PKG_PDS.PROC_PDS_INSERT(
+    	 #{idx,mode=IN,jdbcType=INTEGER}
+    	,#{title,mode=IN,jdbcType=VARCHAR}
+    	,#{cntx,mode=IN,jdbcType=VARCHAR}
+    	,#{memid,mode=IN,jdbcType=VARCHAR}
+    	,#{mempwd,mode=IN,jdbcType=VARCHAR}
+    	,#{fnum,mode=IN,jdbcType=INTEGER}
+    	,#{lvl,mode=IN,jdbcType=INTEGER}
+    	,#{step,mode=IN,jdbcType=INTEGER}
+    	,#{menuId,mode=IN,jdbcType=VARCHAR}
+	    ,#{fileNames,mode=IN,javaType=Object,jdbcType=ARRAY,jdbcTypeName=FILE_ARRAY,typeHandler=com.spring.pds.service.typehandler.ListMapTypeHandler}   	 	    	
+	    ,#{fileExts,mode=IN,javaType=Object,jdbcType=ARRAY,jdbcTypeName=FILE_ARRAY,typeHandler=com.spring.pds.service.typehandler.ListMapTypeHandler}  	 	    	
+	    ,#{sFileNames,mode=IN,javaType=Object,jdbcType=ARRAY,jdbcTypeName=FILE_ARRAY,typeHandler=com.spring.pds.service.typehandler.ListMapTypeHandler}	    	
+    	)}
+    </insert>
+    <select id="GetFiles" statementType="CALLABLE" parameterType="hashmap"
+    resultType="com.spring.pds.files.vo.FilesVo">
+    {Call PKG_PDS.PROC_PDS_GET_FILES(
+     #{idx,mode=IN,jdbcType=INTEGER}
+    ,#{menuId,mode=IN,jdbcType=VARCHAR}
+    ,#{result,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=files}
+    )}
+    </select>
+    <delete id="DelFiles">
+    	{Call PKG_PDS.PROC_PDS_DEL_FILES(
+    		  #{idx,mode=IN,jdbcType=INTEGER}
+    		 ,#{fnum,mode=IN,jdbcType=INTEGER}
+    		 ,#{menuId,mode=IN,jdbcType=VARCHAR}
+    	)}
+    </delete>
+    <update id="UpdatePds">
+    {Call PKG_PDS.PROC_PDS_UPD_ROW(
+     	#{idx,mode=IN,jdbcType=INTEGER}
+    	,#{title,mode=IN,jdbcType=VARCHAR}
+    	,#{cntx,mode=IN,jdbcType=VARCHAR}
+    	,#{menuId,mode=IN,jdbcType=VARCHAR}
+     ,#{fileNames,mode=IN,javaType=Object,jdbcType=ARRAY,jdbcTypeName=FILE_ARRAY,typeHandler=com.spring.pds.service.typehandler.ListMapTypeHandler}   	 	    	
+	    ,#{fileExts,mode=IN,javaType=Object,jdbcType=ARRAY,jdbcTypeName=FILE_ARRAY,typeHandler=com.spring.pds.service.typehandler.ListMapTypeHandler}  	 	    	
+	    ,#{sFileNames,mode=IN,javaType=Object,jdbcType=ARRAY,jdbcTypeName=FILE_ARRAY,typeHandler=com.spring.pds.service.typehandler.ListMapTypeHandler}	    
+	    )}	
+    </update>
+    <delete id="delOnlyFile">
+    	{Call PKG_PDS.PROC_PDS_DEL_ONLY_FILES(
+    	#{idx,mode=IN,jdbcType=INTEGER}	
+    	,#{menuId,mode=IN,jdbcType=VARCHAR}
+    	,#{fileNum,mode=IN,jdbcType=INTEGER}
+    	,#{result,mode=OUT,jdbcType=VARCHAR,javaType=string}	
+    	)}
+    </delete>
+    </mapper>

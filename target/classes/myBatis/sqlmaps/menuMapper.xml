@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="Menu">
+      <resultMap id="MenuMap" type="com.spring.menu.vo.MenuVo">
+  		<result property="menuId" 	   column="MENUID" 	   javaType="String"/>
+  		<result property="menuName"    column="MENUNAME"   javaType="String"/>
+  		<result property="menuIdx"     column="MENUIDX"    javaType="int"/>
+    </resultMap>
+    	<select id="GetMenuList" statementType="CALLABLE" parameterType="hashmap"
+    	resultType="com.spring.menu.vo.MenuVo"
+    	>
+    	{Call PKG_MENU01.SELECT_MENUTBLALL(
+    	#{result,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=MenuMap}
+    	)}
+    	</select>
+  		<insert id="InMenu" statementType="CALLABLE" parameterType="hashmap">
+  			{Call PKG_MENU01.INSERT_MENUTBL(
+  				#{MenuName,mode=IN,jdbcType=VARCHAR}
+  			)}
+  		</insert>
+  		<delete id="DelMenu">
+  			{Call PKG_MENU01.DELETE_MENUTBL(
+  				#{menuId,mode=IN,jdbcType=VARCHAR}
+  			)}
+  		</delete>
+  		<update id="UpdMenu">
+  			{Call PKG_MENU01.UPDATE_MENUTBL(
+  				 #{menuId,mode=IN,jdbcType=VARCHAR}
+  				,#{menuName,mode=IN,jdbcType=VARCHAR}
+  			)}
+  		</update>
+  		<update id="CngMenuSeq">
+  			{Call PKG_MENU01.CHANGE_SEQ(
+  				 #{menuId,mode=IN,jdbcType=VARCHAR}
+  				,#{menuSeq,mode=IN,jdbcType=INTEGER}
+  			)}
+  		</update>
+    </mapper>
+    

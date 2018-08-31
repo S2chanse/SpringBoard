@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="User">
+      <resultMap id="UserInfo" type="com.spring.login.vo.UserVo">
+  		<result property="memId" 	   column="MEMID" 	   javaType="String"/>
+  		<result property="memPwd"    column="MEMPWD"   javaType="String"/>
+  		<result property="memNick"     column="MEMNICK"    javaType="String"/>
+  		<result property="memPhone"     column="MEMPHONE"    javaType="String"/>
+  		<result property="regdate"     column="REGDATE"    javaType="String"/>
+    </resultMap>
+    	<select id="GetInfo" statementType="CALLABLE" parameterType="hashmap"
+    	resultType="com.spring.login.vo.UserVo"
+    	>
+    	 SELECT MEMID,MEMPWD,MEMNICK, MEMPHONE, REGDATE
+		  FROM MEMBER01
+		  WHERE MEMID=#{userId} AND MEMPWD=#{userPwd}
+    	</select>
+  	
+    </mapper>
+    

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+  <mapper namespace="Board">
+     <resultMap id="BoardMap" type="com.spring.board.vo.BoardVo">
+  		<result property="idx" 	  	 column="IDX" 			javaType="int"/>
+  		<result property="lookcnt"   column="LOOKCNT"   	javaType="int"/>
+  		<result property="title"  	 column="TITLE"     	javaType="String"/>
+  		<result property="cntx" 	 column="CNTX" 			javaType="String"/>
+  		<result property="memid"   	 column="MEMID" 	  	javaType="String"/>
+  		<result property="mempwd"    column="MEMPWD"    	javaType="String"/>
+  		<result property="likecnt" 	 column="LIKECNT"		javaType="int"/>
+  		<result property="regdate"   column="REGDATENAME"   javaType="String"/>
+  		<result property="fnum"    	 column="FNUM"    		javaType="int"/>
+  		<result property="lvl" 	   	 column="LVL" 			javaType="int"/>
+  		<result property="step"   	 column="STEP"  		javaType="int"/>
+  		<result property="pnum"    	 column="PNUM"    		javaType="int"/>
+		<result property="del_yn"    column="DEL_YN"   		javaType="String"/>
+  		<result property="menuid"    column="MENUID"    	javaType="String"/>
+    </resultMap>
+    <select id="GetList" statementType="CALLABLE" parameterType="hashmap"
+    	resultType="com.spring.board.vo.BoardVo"
+    	>
+    	{Call PKG_BDR01.select_alltable(
+    	#{menuId,mode=IN,jdbcType=VARCHAR},
+    	#{pnum,mode=IN,jdbcType=INTEGER},
+    	#{rowcnt,mode=IN,jdbcType=INTEGER},
+    	#{result,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=BoardMap}
+    	)}
+    	</select>
+    	<select id="GetRow" statementType="CALLABLE" parameterType="hashmap"
+    	resultType="com.spring.board.vo.BoardVo"
+    	>
+    	{Call PKG_BDR01.select_atable(
+    	#{idx,mode=IN,jdbcType=INTEGER},
+    	#{menuId,mode=IN,jdbcType=VARCHAR},
+    	#{result,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=BoardMap}
+    	)}
+    	</select>
+    <insert id="BoardInsert" statementType="CALLABLE"  parameterType="hashmap" >
+    	{Call PKG_BDR01.INSERT_BRD(
+    	 #{idx,mode=IN,jdbcType=INTEGER}
+    	,#{title,mode=IN,jdbcType=VARCHAR}
+    	,#{cntx,mode=IN,jdbcType=VARCHAR}
+    	,#{memid,mode=IN,jdbcType=VARCHAR}
+    	,#{mempwd,mode=IN,jdbcType=VARCHAR}
+    	,#{fnum,mode=IN,jdbcType=INTEGER}
+    	,#{lvl,mode=IN,jdbcType=INTEGER}
+    	,#{step,mode=IN,jdbcType=INTEGER}
+    	,#{menuId,mode=IN,jdbcType=VARCHAR}    	
+    	)}
+    </insert>
+    <update id="UpdateBoard" statementType="CALLABLE" parameterType="hashmap">
+    	{Call PKG_BDR01.update_atable(
+    	#{idx,mode=IN,jdbcType=INTEGER}
+       ,#{title,mode=IN,jdbcType=VARCHAR}
+       ,#{cntx,mode=IN,jdbcType=VARCHAR}
+       ,#{menuId,mode=IN,jdbcType=VARCHAR}
+    	)}
+    </update>
+    <delete id="DeleteBoard" statementType="CALLABLE" parameterType="hashmap">
+    	{Call PKG_BDR01.delete_atable(
+    	     #{idx,mode=IN,jdbcType=INTEGER}
+    		,#{fnum,mode=IN,jdbcType=INTEGER}
+    	 	,#{menuId,mode=IN,jdbcType=VARCHAR}
+    	)}
+    </delete>
+    <update id="UpdateLookCnt" statementType="CALLABLE" parameterType="hashmap">
+    {Call PKG_BDR01.UPDATE_LOOKCNT(
+    #{idx,mode=IN,jdbcType=INTEGER}
+    ,#{menuId,mode=IN,jdbcType=VARCHAR})}
+    </update>
+    <select id="getRowCnt" statementType="CALLABLE" parameterType="hashmap" resultType="int">
+    	{Call PKG_BDR01.GET_ALLROWCNT(
+    	#{menuId,mode=IN,jdbcType=VARCHAR}
+    	,#{rowcnt,mode=IN,jdbcType=INTEGER}
+    	,#{allRowCnt,mode=OUT,jdbcType=INTEGER,javaType=int}
+    	)}
+    </select>
+  </mapper>  
+    
